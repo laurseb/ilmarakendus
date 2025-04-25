@@ -1,0 +1,24 @@
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <title>Ilm</title>
+</head>
+<body>
+    <h1>Vaata ilma</h1>
+    <form action="/weather" method="post">
+        <label for="city">Sisesta linn:</label>
+        <input type="text" id="city" name="city" required>
+        <button type="submit">Vaata ilma</button>
+    </form>
+
+    {% if temp %}
+    <h2>Ilm linnas: {{ city }}</h2>
+    <p>Temperatuur: {{ temp }} °C</p>
+    <p>Õhuniiskus: {{ humidity }}%</p>
+    <p>Tuulekiirus: {{ wind }} m/s</p>
+    <p>Pilvisus: {{ clouds }}%</p>
+    <p>Sademed: {{ sademed }}</p>
+    
+{% endif %}
+</body>
+</html>

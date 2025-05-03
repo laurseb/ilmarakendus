@@ -1,25 +1,125 @@
+<!DOCTYPE html>
 <html lang="et">
 <head>
     <meta charset="UTF-8">
     <title>Ilm</title>
+    <style>
+        body {
+            background-color: #e3f0ff;
+            font-family: Arial, sans-serif;
+            color: #000000;
+            padding: 50px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .content {
+            width: 60%;
+        }
+        h1 {
+            color: darkblue;
+        }
+        .nupp {
+            background-color: rgb(0, 0, 199);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .nupp:hover {
+            background-color: navy;
+        }
+        iframe {
+            border: 0;
+            width: 600px;
+            height: 500px;
+        }
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        table, th, td {
+            border: 1px solid #333;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        #dataTable {
+            display: none;
+        }
+    </style>
+    <script>
+        function toggleTable() {
+            const table = document.getElementById('dataTable');
+            table.style.display = (table.style.display === 'none') ? 'table' : 'none';
+        }
+    </script>
 </head>
 <body>
-    <h1>Vaata ilma</h1>
-    <p>Linna nimed anda inglise keeles.</p>
-    <form action="/weather" method="post">
-        <label for="city">Sisesta linn:</label>
-        <input type="text" id="city" name="city" required>
-        <button type="submit">Vaata ilma</button>
-    </form>
+    <div class="content">
+        <h1>Vaata ilma</h1>
+        <p>Piirkonna nimed anda inglise keeles.</p>
+        <form action="/weather" method="post">
+            <label for="city">Sisesta piirkond:</label>
+            <input type="text" id="city" name="city" required>
+            <button type="submit" class="nupp">Vaata ilma</button>
+        </form>
 
-    {% if temp %}
-    <h2>Ilm linnas: {{ city }}</h2>
-    <p>Temperatuur: {{ temp }} °C</p>
-    <p>Õhuniiskus: {{ humidity }}%</p>
-    <p>Tuulekiirus: {{ wind }} m/s</p>
-    <p>Pilvisus: {{ clouds }}%</p>
-    <p>Sademed: {{ sademed }}</p>
-    
-{% endif %}
+        {% if error %}
+            <p style="color:red;">{{ error }}</p>
+        {% endif %}
+
+        {% if temp %}
+            <h2>Ilm piirkonnas: {{ city }}</h2>
+            <p>Temperatuur: {{ temp }} °C</p>
+            <p>Õhuniiskus: {{ humidity }}%</p>
+            <p>Tuulekiirus: {{ wind }} m/s</p>
+            <p>Pilvisus: {{ clouds }}%</p>
+            <p>Sademed: {{ sademed }}</p>
+
+            <button onclick="toggleTable()" class="nupp">Näita/Peida kõik andmed</button>
+
+            <table id="dataTable">
+                <thead>
+                    <tr><th>Väli</th><th>Väärtus</th></tr>
+                </thead>
+                <tbody>
+                    {% for key, value in data.items() %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>
+                                {% if value is mapping %}
+                                    <pre>{{ value | tojson(indent=2) }}</pre>
+                                {% elif value is iterable and not value is string %}
+                                    <pre>{{ value | tojson(indent=2) }}</pre>
+                                {% else %}
+                                    {{ value }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+    {% if lat and lon %}
+    <div>
+        <iframe
+            src="https://maps.google.com/maps?q={{ lat }},{{ lon }}&z=10&output=embed"
+            allowfullscreen
+            loading="lazy">
+        </iframe>
+
+        {% if image_url %}
+            <div style="margin-top: 20px;">
+                <h3>Pilt piirkonnast: {{ city }}</h3>
+                <img src="{{ image_url }}" alt="Pilt piirkonnast {{ city }}" style="width: 500px; height: auto; border-radius: 10px;">
+                <p>{{ image_url }}</p>
+            </div>
+        {% endif %}
+    </div>
+    {% endif %}
 </body>
 </html>

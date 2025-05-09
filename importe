@@ -1,0 +1,3 @@
+pip install beautifulsoup4 requests
+pip install requests
+python -m pip install flask

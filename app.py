@@ -28,7 +28,8 @@ def weather():
     clothesS = ""
     clothesn = ""
 
-    city = request.form['city']
+    city_input = request.form['city']
+    city = city_input.strip().title()
     api_key = "f6704ba628b0c2635ecb657b3662f990"
     url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
 

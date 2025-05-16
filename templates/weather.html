@@ -78,6 +78,13 @@
             <p>Tuulekiirus: {{ wind }} m/s</p>
             <p>Pilvisus: {{ clouds }}%</p>
             <p>Sademed: {{ sademed }}</p>
+            <h3>Soovitus riietuseks:</h3>
+            <ul>
+                {% if clothest %}<li>{{ clothest }}</li>{% endif %}
+                {% if clothesS %}<li>{{ clothesS }}</li>{% endif %}
+                {% if clothesw %}<li>{{ clothesw }}</li>{% endif %}
+                {% if clothesn %}<li>{{ clothesn }}</li>{% endif %}
+            </ul>
 
             <button onclick="toggleTable()" class="nupp">Näita/Peida kõik andmed</button>
 

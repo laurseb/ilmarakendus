@@ -4,19 +4,17 @@ from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
-def get_google_image(city):
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-    }
-    query = city.replace(" ", "+")
-    url = f"https://www.google.com/search?tbm=isch&q={query}"
-    response = requests.get(url, headers=headers)
-
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
-        images = soup.find_all('img')
-        if len(images) > 1:
-            return images[1]['src']
+def get_wikipedia_image(city):
+    try:
+        url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{city}"
+        response = requests.get(url)
+        data = response.json()
+        if "originalimage" in data:
+            return data["originalimage"]["source"]
+        elif "thumbnail" in data:
+            return data["thumbnail"]["source"]
+    except:
+        pass
     return None
 
 @app.route('/', methods=['GET'])
@@ -25,6 +23,11 @@ def index():
 
 @app.route('/weather', methods=['POST'])
 def weather():
+    clothest = ""
+    clothesw = ""
+    clothesS = ""
+    clothesn = ""
+
     city = request.form['city']
     api_key = "f6704ba628b0c2635ecb657b3662f990"
     url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
@@ -45,7 +48,7 @@ def weather():
         snow_3h = data.get('snow', {}).get('3h')
         lat = data['coord']['lat']
         lon = data['coord']['lon']
-        image_url = get_google_image(city)
+        image_url = get_wikipedia_image(city)
 
         if rain_1h:
             sademed = f"Vihma {rain_1h} mm viimase 1h jooksul"
@@ -60,6 +63,28 @@ def weather():
 
         description = data['weather'][0]['description']
 
+        if temperature <= -10:
+            clothest=("Talvejope")
+        elif temperature <= 0:
+            clothest=("Õhuejope")
+        elif temperature <= 10:
+            clothest=("Kampsun")
+        elif temperature <= 25:
+            clothest=("T-särk ja pikkad püksid")
+        else:
+            clothest=("lühikesi riideid ja päikesekaitset. Hakkad välja nägema nagu rosin .")
+
+        if wind_speed > 8:
+            clothesw=("tuulekindel jope")
+
+        if sademed != "Sademed puuduvad":
+            if rain_1h > 0:
+                clothesS=("vihmakeepi või vihmavarju")
+
+        if humidity > 80 and temperature > 20:
+            clothesn=("hingav riietus")
+
+
         return render_template(
             'weather.html',
             temp=temperature,
@@ -72,10 +97,14 @@ def weather():
             description=description,
             lat=lat,
             lon=lon,
-            image_url=image_url
+            image_url=image_url,
+            clothest=clothest,
+            clothesn=clothesn,
+            clothesS=clothesS,
+            clothesw=clothesw
         )
     except Exception as e:
-        return render_template('weather.html', error="Antud linna ei leitud, proovige uuesti")
+        return render_template('weather.html', error="Antud piirkonda ei leitud, proovige uuesti")
 
 if __name__ == '__main__':
     app.run(debug=True)

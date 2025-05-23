@@ -78,6 +78,7 @@
             <p>Tuulekiirus: {{ wind }} m/s</p>
             <p>Pilvisus: {{ clouds }}%</p>
             <p>Sademed: {{ sademed }}</p>
+
             <h3>Soovitus riietuseks:</h3>
             <ul>
                 {% if clothest %}<li>{{ clothest }}</li>{% endif %}
@@ -85,6 +86,44 @@
                 {% if clothesw %}<li>{{ clothesw }}</li>{% endif %}
                 {% if clothesn %}<li>{{ clothesn }}</li>{% endif %}
             </ul>
+
+            {% if clothest or clothesw or clothesS or clothesn %}
+                <div style="margin-top: 30px;">
+                    <h3>Soovituslikud riided:</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                        {% if clothest %}
+                            <div>
+                                <p>{{ clothest }}</p>
+                                {% if "Talvejope" in clothest %}
+                                    <img src="{{ url_for('static', filename='images/talvejope.jpeg') }}" alt="Talvejope" style="height: 350px;">
+                                {% elif "Õhukejope" in clothest %}
+                                    <img src="{{ url_for('static', filename='images/õhukejope.jpg') }}" alt="Õhuke jope" style="height: 350px;">
+                                {% elif "Kampsun" in clothest %}
+                                    <img src="{{ url_for('static', filename='images/kampsun.jpg') }}" alt="Kampsun" style="height: 350px;">
+                                {% elif "T-särk" in clothest %}
+                                    <img src="{{ url_for('static', filename='images/t-särk.jpg') }}" alt="T-särk" style="height: 350px;">
+                                {% elif "Lühikesed" in clothest %}
+                                    <img src="{{ url_for('static', filename='images/lühikesed_riided.jpg') }}" alt="Lühikesed riided" style="height: 350px;">
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        {% if clothesw %}
+                            <div>
+                                <p>{{ clothesw }}</p>
+                                <img src="{{ url_for('static', filename='images/tuulekindel.jpg') }}" alt="Tuulekindel jope" style="height: 350px;">
+                            </div>
+                        {% endif %}
+
+                        {% if clothesS %}
+                            <div>
+                                <p>{{ clothesS }}</p>
+                                <img src="{{ url_for('static', filename='images/vihmakeep.jpg') }}" alt="Vihmakeep" style="height: 350px;">
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
 
             <button onclick="toggleTable()" class="nupp">Näita/Peida kõik andmed</button>
 
@@ -97,9 +136,7 @@
                         <tr>
                             <td>{{ key }}</td>
                             <td>
-                                {% if value is mapping %}
-                                    <pre>{{ value | tojson(indent=2) }}</pre>
-                                {% elif value is iterable and not value is string %}
+                                {% if value is mapping or (value is iterable and not value is string) %}
                                     <pre>{{ value | tojson(indent=2) }}</pre>
                                 {% else %}
                                     {{ value }}
@@ -111,21 +148,23 @@
             </table>
         {% endif %}
     </div>
-    {% if lat and lon %}
-    <div>
-        <iframe
-            src="https://maps.google.com/maps?q={{ lat }},{{ lon }}&z=10&output=embed"
-            allowfullscreen
-            loading="lazy">
-        </iframe>
 
-        {% if image_url %}
-            <div style="margin-top: 20px;">
-                <h3>Pilt piirkonnast: {{ city }}</h3>
-                <img src="{{ image_url }}" alt="Pilt piirkonnast {{ city }}" style="width: 500px; height: auto; border-radius: 10px;">
-            </div>
-        {% endif %}
-    </div>
+    {% if lat and lon %}
+        <div>
+            <iframe
+                src="https://maps.google.com/maps?q={{ lat }},{{ lon }}&z=10&output=embed"
+                allowfullscreen
+                loading="lazy">
+            </iframe>
+
+            {% if image_url %}
+                <div style="margin-top: 20px;">
+                    <h3>Pilt piirkonnast: {{ city }}</h3>
+                    <img src="{{ image_url }}" alt="Pilt piirkonnast {{ city }}" style="width: 500px; height: auto; border-radius: 10px;">
+                    <p>{{ image_url }}</p>
+                </div>
+            {% endif %}
+        </div>
     {% endif %}
 </body>
 </html>

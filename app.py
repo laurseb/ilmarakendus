@@ -67,23 +67,23 @@ def weather():
         if temperature <= -10:
             clothest=("Talvejope")
         elif temperature <= 0:
-            clothest=("Õhuejope")
+            clothest=("Õhuke jope")
         elif temperature <= 10:
             clothest=("Kampsun")
         elif temperature <= 25:
-            clothest=("T-särk ja pikkad püksid")
+            clothest=("T-särk ja pikad püksid")
         else:
-            clothest=("lühikesi riideid ja päikesekaitset. Hakkad välja nägema nagu rosin .")
+            clothest=("Lühikesed riided ja päikesekaitse. Hakkad välja nägema nagu rosin .")
 
         if wind_speed > 8:
-            clothesw=("tuulekindel jope")
+            clothesw=("Tuulekindel jope")
 
         if sademed != "Sademed puuduvad":
             if rain_1h > 0:
-                clothesS=("vihmakeepi või vihmavarju")
+                clothesS=("Vihmakeep või vihmavari")
 
         if humidity > 80 and temperature > 20:
-            clothesn=("hingav riietus")
+            clothesn=("Hingav riietus")
 
 
         return render_template(

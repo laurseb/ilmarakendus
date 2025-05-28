@@ -10,7 +10,7 @@ Piirkonnad tuleks sisestada inglise keeles programmi toimimiseks.
 
 Võib tekkida probleeme otsinguga, kui mitu piirkonda jagavad sama nime. nt Paris, Prantsusmaa ja Paris, Texas
 
-Tabel, mis kuvatakse andmete all, kuvab api andmed vormistamata.
+Tabel, mis esineb andmete all, kuvab api andmed vormistamata.
 
 Sademete kontrollimiseks soovitame kasutada Ventusky teenust, et leida kõige sademeterohkemad piirkonnad.
 

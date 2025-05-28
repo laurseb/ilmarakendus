@@ -1,6 +1,5 @@
 Programmi töötamiseks on vajalikud järgmised moodulid: "requests", "flask"
 
-
 Programmi kasutamise tähelepanekud:
 
 Kuvatud ilmaandmed on uuendatud igal täistunnil.

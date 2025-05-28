@@ -21,6 +21,11 @@ def get_wikipedia_image(city):
 def index():
     return render_template('weather.html')
 
+#clothest on riietus vastavalt temperatuurile
+#clothesw on riietus vastavalt tuulele
+#clothesS on riietus vastavalt sademetele
+#clothesn on riietus vastavalt niiskusele
+
 @app.route('/weather', methods=['POST'])
 def weather():
     clothest = ""

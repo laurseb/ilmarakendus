@@ -1,4 +1,4 @@
-Programmi töötamiseks on vajalikud järgmised moodulid: "requests", "flask"
+Kasutamine peaks olema lihtne ja intuitiivne: siseta piirkond-> vajuta "Vaata ilma" -> andmed kuvatakse ekraanile ning täpsemate andmete jaoks saab vajutada "Näita/Peida kõik andmed", mis asub riietuse soovituse all. Edasi kasutamiseks on vaja uus sisend anda ja vajutada "Vaata ilma". Programmi töötamiseks on vajalikud järgmised moodulid: "requests", "flask"
 
 Programmi kasutamise tähelepanekud:
 

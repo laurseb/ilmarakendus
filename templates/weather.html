@@ -5,10 +5,16 @@
     <title>Ilm</title>
     <style>
         body {
-            background-color: #e3f0ff;
+            font-size: 20px;
+            background:
+            linear-gradient(to bottom right, rgba(184, 206, 226, 0.9), rgba(194, 169, 255, 0.9)),
+            url("{{ url_for('static', filename='images/pilved.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             font-family: Arial, sans-serif;
             color: #000000;
-            padding: 50px;
+            padding: 50px 90px;
             display: flex;
             justify-content: space-between;
         }
@@ -40,7 +46,7 @@
             width: 100%;
         }
         table, th, td {
-            border: 1px solid #333;
+            border: 2px solid #000000;
         }
         th, td {
             padding: 8px;
@@ -79,6 +85,14 @@
             <p>Pilvisus: {{ clouds }}%</p>
             <p>Sademed: {{ sademed }}</p>
 
+            <h3>Soovitus riietuseks:</h3>
+            <ul>
+                {% if clothest %}<li>{{ clothest }}</li>{% endif %}
+                {% if clothesS %}<li>{{ clothesS }}</li>{% endif %}
+                {% if clothesw %}<li>{{ clothesw }}</li>{% endif %}
+                {% if clothesn %}<li>{{ clothesn }}</li>{% endif %}
+            </ul>
+
             {% if clothest or clothesw or clothesS or clothesn %}
                 <div style="margin-top: 30px;">
                     <h3>Soovituslikud riided:</h3>
@@ -87,15 +101,15 @@
                             <div>
                                 <p>{{ clothest }}</p>
                                 {% if "Talvejope" in clothest %}
-                                    <img src="{{ url_for('static', filename='images/talvejope.jpeg') }}" alt="Talvejope" style="height: 350px;">
-                                {% elif "Õhuke jope" in clothest %}
-                                    <img src="{{ url_for('static', filename='images/õhukejope.jpg') }}" alt="Õhuke jope" style="height: 350px;">
+                                    <img src="{{ url_for('static', filename='images/talvejope.jpeg') }}" alt="Talvejope" style="height: 500px;">
+                                {% elif "Õhukejope" in clothest %}
+                                    <img src="{{ url_for('static', filename='images/õhukejope.jpg') }}" alt="Õhuke jope" style="height: 500px;">
                                 {% elif "Kampsun" in clothest %}
-                                    <img src="{{ url_for('static', filename='images/kampsun.jpg') }}" alt="Kampsun" style="height: 350px;">
+                                    <img src="{{ url_for('static', filename='images/kampsun.jpg') }}" alt="Kampsun" style="height: 500px;">
                                 {% elif "T-särk" in clothest %}
-                                    <img src="{{ url_for('static', filename='images/t-särk.jpg') }}" alt="T-särk" style="height: 350px;">
+                                    <img src="{{ url_for('static', filename='images/t-särk.jpg') }}" alt="T-särk" style="height: 500px;">
                                 {% elif "Lühikesed" in clothest %}
-                                    <img src="{{ url_for('static', filename='images/lühikesed_riided.jpg') }}" alt="Lühikesed riided" style="height: 350px;">
+                                    <img src="{{ url_for('static', filename='images/lühikesed_riided.jpg') }}" alt="Lühikesed riided" style="height: 500px;">
                                 {% endif %}
                             </div>
                         {% endif %}
@@ -103,14 +117,14 @@
                         {% if clothesw %}
                             <div>
                                 <p>{{ clothesw }}</p>
-                                <img src="{{ url_for('static', filename='images/tuulekindel.jpg') }}" alt="Tuulekindel jope" style="height: 350px;">
+                                <img src="{{ url_for('static', filename='images/tuulekindel.jpg') }}" alt="Tuulekindel jope" style="height: 500px;">
                             </div>
                         {% endif %}
 
                         {% if clothesS %}
                             <div>
                                 <p>{{ clothesS }}</p>
-                                <img src="{{ url_for('static', filename='images/vihmakeep.jpg') }}" alt="Vihmakeep" style="height: 350px;">
+                                <img src="{{ url_for('static', filename='images/vihmakeep.jpg') }}" alt="Vihmakeep" style="height: 500px;">
                             </div>
                         {% endif %}
                     </div>
@@ -152,7 +166,7 @@
             {% if image_url %}
                 <div style="margin-top: 20px;">
                     <h3>Pilt piirkonnast: {{ city }}</h3>
-                    <img src="{{ image_url }}" alt="Pilt piirkonnast {{ city }}" style="width: 500px; height: auto; border-radius: 10px;">
+                    <img src="{{ image_url }}" alt="Pilt piirkonnast {{ city }}" style="width: 600px; height: auto; border-radius: 10px;">
                     <p>{{ image_url }}</p>
                 </div>
             {% endif %}
